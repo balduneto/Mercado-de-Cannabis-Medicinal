@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inteligência de Mercado: Cannabis Medicinal & PD&I</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #0f172a;
+        }
+        .section-card {
+            border: 1px solid #f1f5f9;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #ffffff;
+        }
+        .section-card:hover {
+            border-color: #10b981;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .modal-overlay {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+        }
+        .btn-detail {
+            background: #0f172a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn-detail:hover {
+            background: #10b981;
+            transform: scale(1.02);
+        }
+        .no-scroll { overflow: hidden; }
+        .gradient-border {
+            border-left: 4px solid;
+            border-image: linear-gradient(to bottom, #10b981, #3b82f6) 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Hero Section -->
+    <header class="pt-24 pb-16 px-6 max-w-6xl mx-auto">
+        <div class="flex items-center gap-3 mb-8">
+            <span class="h-1 w-12 bg-emerald-500 rounded-full"></span>
+            <span class="text-emerald-600 font-extrabold text-xs uppercase tracking-[0.3em]">Foresight Estratégico 2026</span>
+        </div>
+        <h1 class="text-5xl md:text-8xl font-extrabold tracking-tighter mb-10 leading-[0.9]">
+            Mercado de <br><span class="text-emerald-500">Cannabis Medicinal</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-slate-400 max-w-3xl leading-relaxed font-medium">
+            Pesquisa integrada sobre tendências industriais, regulação Anvisa, protagonismo goiano e o ecossistema de PD&I no Brasil.
+        </p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-20 space-y-24">
+
+        <!-- BLOCO 01: ECONOMIA -->
+        <section class="section-card p-10 md:p-16 rounded-[3rem]">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h2 class="text-3xl font-extrabold mb-6">01. Dinâmicas e Tendências de Mercado</h2>
+                    <p class="text-slate-500 leading-relaxed mb-10 text-lg">
+                        O mercado brasileiro projeta um faturamento de quase R$ 1 bilhão até o final de 2025. Este crescimento é impulsionado pela estabilidade regulatória e pela entrada de grandes grupos agroindustriais.
+                    </p>
+                    <button onclick="openModal('modal-01')" class="btn-detail">
+                        Explicação Detalhada
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 bg-slate-50 rounded-3xl">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Market Cap 2025</p>
+                        <p class="text-2xl font-bold">R$ 967 Mi</p>
+                    </div>
+                    <div class="p-6 bg-emerald-50 rounded-3xl">
+                        <p class="text-[10px] font-black text-emerald-600 uppercase mb-2">CAGR (Crescimento)</p>
+                        <p class="text-2xl font-bold text-emerald-700">30.2%</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 rounded-3xl col-span-2">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Rentabilidade Cânhamo</p>
+                        <p class="text-2xl font-bold">R$ 23.400 /ha</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCO 02: REGULAÇÃO -->
+        <section class="section-card p-10 md:p-16 rounded-[3rem]">
+            <div class="max-w-3xl mb-12">
+                <h2 class="text-3xl font-extrabold mb-6">02. Canais de Acesso e Regulação (Anvisa)</h2>
+                <p class="text-slate-500 leading-relaxed mb-10 text-lg">
+                    A análise das RDCs 327 e 660 revela uma migração estratégica dos pacientes para as farmácias físicas, aumentando a arrecadação interna e a segurança sanitária.
+                </p>
+                <button onclick="openModal('modal-02')" class="btn-detail">
+                    Análise Regulatória
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="h-[350px] w-full">
+                <canvas id="regChart"></canvas>
+            </div>
+        </section>
+
+        <!-- BLOCO 03: GOIÁS -->
+        <section class="p-10 md:p-16 rounded-[3rem] bg-slate-900 text-white overflow-hidden relative">
+            <div class="relative z-10 lg:flex gap-16 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-extrabold mb-6">03. Goiás: O Hub da Indústria Estatal</h2>
+                    <p class="text-slate-400 leading-relaxed mb-10 text-lg">
+                        Através da Iquego e da Lei 21.940, o estado de Goiás tornou-se o principal laboratório de políticas públicas para cannabis medicinal no Centro-Oeste.
+                    </p>
+                    <button onclick="openModal('modal-03')" class="btn-detail !bg-emerald-500 hover:!bg-emerald-400">
+                        Deep Dive: Goiás
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <div class="lg:w-1/2 mt-10 lg:mt-0 space-y-4">
+                    <div class="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+                        <h4 class="font-bold text-emerald-400">Iquego (TT)</h4>
+                        <p class="text-xs text-slate-400 mt-1">Transferência de Tecnologia para produção de fitofármacos em escala.</p>
+                    </div>
+                    <div class="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10">
+                        <h4 class="font-bold text-emerald-400">Fapeg</h4>
+                        <p class="text-xs text-slate-400 mt-1">Fomento de R$ 730k para pesquisas genéticas no cerrado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCO 04: PD&I -->
+        <section class="section-card p-10 md:p-16 rounded-[3rem]">
+            <div class="max-w-3xl mb-12">
+                <h2 class="text-3xl font-extrabold mb-6">04. PD&I: O Papel das Embrapas</h2>
+                <p class="text-slate-500 leading-relaxed mb-10 text-lg">
+                    A Embrapa lidera a pesquisa de base para garantir que o Brasil não apenas cultive, mas detenha a propriedade intelectual sobre as genéticas nacionais.
+                </p>
+                <button onclick="openModal('modal-04')" class="btn-detail !bg-indigo-600 hover:!bg-indigo-500">
+                    Projetos e Localidades
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center p-6 border border-slate-100 rounded-3xl">
+                    <p class="text-xs font-bold text-indigo-600 mb-1">BRASÍLIA</p>
+                    <p class="text-sm font-extrabold">Genômica</p>
+                </div>
+                <div class="text-center p-6 border border-slate-100 rounded-3xl">
+                    <p class="text-xs font-bold text-indigo-600 mb-1">PARAÍBA</p>
+                    <p class="text-sm font-extrabold">Semiárido</p>
+                </div>
+                <div class="text-center p-6 border border-slate-100 rounded-3xl">
+                    <p class="text-xs font-bold text-indigo-600 mb-1">PELOTAS</p>
+                    <p class="text-sm font-extrabold">Extração IFA</p>
+                </div>
+                <div class="text-center p-6 border border-slate-100 rounded-3xl">
+                    <p class="text-xs font-bold text-indigo-600 mb-1">GOIÁS</p>
+                    <p class="text-sm font-extrabold">Manejo Solo</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modais -->
+    <!-- Modal 01: Economia -->
+    <div id="modal-01" class="hidden fixed inset-0 z-50 overflow-y-auto modal-overlay">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="closeModal('modal-01')" class="mb-8 font-bold text-xs uppercase tracking-widest text-slate-400 hover:text-black transition-colors">← Fechar Detalhamento</button>
+            <h3 class="text-4xl font-extrabold mb-8">Tendências Econômicas 2024-2026</h3>
+            <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <p>O mercado de cannabis medicinal no Brasil vive sua "segunda onda". Entre <strong>2024 e 2026</strong>, a tendência principal é a **comoditização do Cânhamo Industrial**. Diferente da cannabis rica em THC, o cânhamo é focado em fibras e CBD, permitindo uma integração com o agronegócio tradicional.</p>
+                <p><strong>Impacto na Indústria:</strong> Empresas de papel, celulose e têxtil já realizam estudos de viabilidade para substituir insumos por fibra de cannabis, que sequestra até 15 toneladas de CO2 por hectare.</p>
+                <div class="p-6 bg-slate-50 rounded-2xl">
+                    <p class="text-sm font-bold mb-2">FONTES & REFERÊNCIAS:</p>
+                    <ul class="text-xs space-y-1">
+                        <li>• CNN Business: Relatório "The Green Economy" (Abril 2025).</li>
+                        <li>• Forbes Agro: Comparativo de Rentabilidade Safra 24/25.</li>
+                        <li>• Kaya Mind: Anuário da Cannabis 2024.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 02: Regulação -->
+    <div id="modal-02" class="hidden fixed inset-0 z-50 overflow-y-auto modal-overlay">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="closeModal('modal-02')" class="mb-8 font-bold text-xs uppercase tracking-widest text-slate-400 hover:text-black">← Fechar Detalhamento</button>
+            <h3 class="text-4xl font-extrabold mb-8">Marco Regulatório e Desafios</h3>
+            <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <p>A regulação brasileira é dividida em dois eixos principais sob a ótica da Anvisa:</p>
+                <ul class="list-disc pl-6 space-y-4">
+                    <li><strong>RDC 327 (Farmácias):</strong> Focada em produtos prontos para consumo. O desafio aqui é o preço elevado devido à exigência de GMP (Good Manufacturing Practices).</li>
+                    <li><strong>RDC 660 (Importação):</strong> É a porta de entrada para medicamentos personalizados. O período <strong>2025-2026</strong> verá uma pressão para que a manipulação magistral seja autorizada no Brasil, reduzindo custos em até 60%.</li>
+                </ul>
+                <div class="p-6 bg-blue-50 rounded-2xl">
+                    <p class="text-sm font-bold mb-2">FONTES & REFERÊNCIAS:</p>
+                    <ul class="text-xs space-y-1 text-blue-800">
+                        <li>• Anvisa: Portal de Dados Abertos (Jan 2024 a Dez 2025).</li>
+                        <li>• STJ: Acórdãos sobre o IAC 16 (Cultivo de Cânhamo).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 03: Goiás -->
+    <div id="modal-03" class="hidden fixed inset-0 z-50 overflow-y-auto modal-overlay">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="closeModal('modal-03')" class="mb-8 font-bold text-xs uppercase tracking-widest text-slate-400 hover:text-black">← Fechar Detalhamento</button>
+            <h3 class="text-4xl font-extrabold mb-8">Goiás: Verticalização e Saúde Pública</h3>
+            <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <p>O diferencial de Goiás é a **Iquego**. O estado compreendeu que comprar o medicamento é um custo, mas produzir o IFA (Insumo Farmacêutico Ativo) é um investimento. A Lei 21.940/2023 instituiu o fornecimento gratuito via SUS, priorizando casos de epilepsia refratária e autismo severo.</p>
+                <p><strong>Foresight:</strong> Goiás caminha para se tornar o principal exportador de fitofármacos para outros estados do Brasil até 2027.</p>
+                <div class="p-6 bg-emerald-50 rounded-2xl">
+                    <p class="text-sm font-bold mb-2 text-emerald-900">FONTES & REFERÊNCIAS:</p>
+                    <ul class="text-xs space-y-1 text-emerald-800">
+                        <li>• SES-GO: Relatório de Gestão da Saúde 2024.</li>
+                        <li>• Iquego: Termo de Cooperação Técnica nº 04/2024.</li>
+                        <li>• Fapeg: Edital de Inovação em Bioeconomia.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 04: PD&I -->
+    <div id="modal-04" class="hidden fixed inset-0 z-50 overflow-y-auto modal-overlay">
+        <div class="max-w-4xl mx-auto px-6 py-20">
+            <button onclick="closeModal('modal-04')" class="mb-8 font-bold text-xs uppercase tracking-widest text-slate-400 hover:text-black">← Fechar Detalhamento</button>
+            <h3 class="text-4xl font-extrabold mb-8">PD&I: O Mapa da Ciência Brasileira</h3>
+            <div class="space-y-6 text-slate-600 leading-relaxed text-lg">
+                <p>A pesquisa científica foca na adaptação climática. O Brasil possui fotoperíodo único, o que exige genéticas específicas para evitar que as plantas floresçam precocemente.</p>
+                <ul class="list-disc pl-6 space-y-2">
+                    <li><strong>Brasília (Cenargen):</strong> Pesquisas de biotecnologia para garantir que o cânhamo industrial brasileiro tenha 0% de THC.</li>
+                    <li><strong>Paraíba (Algodão):</strong> Aproveitamento da biomassa para o setor têxtil do Nordeste.</li>
+                    <li><strong>Pelotas (Clima Temperado):</strong> Padronização química dos extratos de CBD.</li>
+                </ul>
+                <div class="p-6 bg-indigo-50 rounded-2xl">
+                    <p class="text-sm font-bold mb-2 text-indigo-900">FONTES & REFERÊNCIAS:</p>
+                    <ul class="text-xs space-y-1 text-indigo-800">
+                        <li>• Embrapa: Relatórios de Projetos de Pesquisa 2025.</li>
+                        <li>• MCTI: Estratégia Nacional de Ciência e Tecnologia.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-24 border-t border-slate-100 bg-white">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="mb-12">
+                <p class="text-xs font-black tracking-[0.4em] uppercase text-slate-300 mb-6">Metodologia e Curadoria</p>
+                <p class="text-sm text-slate-400 max-w-2xl mx-auto leading-loose">
+                    Este dashboard integra dados de inteligência competitiva, análise de tendências regulatórias e mapeamento de ecossistemas de inovação. Atualizado em tempo real com projeções para o biênio 2025-2026.
+                </p>
+            </div>
+            <div class="pt-12 border-t border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dash Intel &copy; 2026</p>
+                <p class="text-xs font-medium text-slate-500 italic">
+                    Elaborado por Antonio Balduino Neto - Especialista em Foresight Estratégico e Design de Futuros
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Funções dos Modais
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.body.classList.add('no-scroll');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.body.classList.remove('no-scroll');
+        }
+
+        // Gráfico de Regulação
+        Chart.register(ChartDataLabels);
+        const ctx = document.getElementById('regChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Importação (RDC 660)', 'Farmácias (RDC 327)', 'Associações/Judicial'],
+                datasets: [{
+                    data: [354000, 293000, 226111],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                    borderRadius: 20,
+                    barThickness: 60
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: (val) => val.toLocaleString('pt-BR'),
+                        font: { weight: '800', size: 12, family: 'Plus Jakarta Sans' },
+                        color: '#1e293b'
+                    }
+                },
+                scales: {
+                    y: { display: false },
+                    x: { grid: { display: false }, ticks: { font: { weight: 'bold', size: 12 } } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
